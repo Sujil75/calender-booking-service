@@ -1,4 +1,4 @@
-const Meeting = require('../model/MeetingModel')
+const {MeetingModel} = require('../model/MeetingModel')
 const { Op } = require("sequelize");
 
 const checkConflict = async ({ userId, startTime, endTime, excludeId }) => {

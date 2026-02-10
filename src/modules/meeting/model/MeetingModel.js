@@ -1,13 +1,16 @@
 const { Sequelize, DataTypes } = require('sequelize');
 const {sequelize} = require('../../../config/DbConnection');
-const {User} = require('../../user/model/UserModel')
+const {UserModel} = require('../../user/model/UserModel')
 
-const Meeting = sequelize.define(
+const MeetingModel = sequelize.define(
   'Meeting',
   {
     id: {
         type: DataTypes.UUID,
-        primaryKey: true
+        defaultValue: DataTypes.UUIDV4,
+        primaryKey: true,
+        autoIncrement: true,
+        allowNull: false,
     },
     title: {
         type: DataTypes.STRING,
@@ -21,13 +24,15 @@ const Meeting = sequelize.define(
         type: DataTypes.DATE,
         allowNull: false,
     }
-  }
+  },{
+       tableName: "meetings"
+    }
 );
 
 // `sequelize.define` also returns the model
 // console.log(User === sequelize.models.User); // true
 
-User.hasMany(Meeting, {foreignKey: "userId"})
-Meeting.belongsTo(User, {foreignKey: "userId"})
+UserModel.hasMany(MeetingModel, {foreignKey: "userId"})
+MeetingModel.belongsTo(UserModel, {foreignKey: "userId"})
 
-module.exports = Meeting
+module.exports = {MeetingModel}

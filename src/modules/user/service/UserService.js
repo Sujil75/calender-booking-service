@@ -1,7 +1,7 @@
-const User = require('../model/UserModel')
+const {UserModel} = require('../model/UserModel')
 
 exports.createUser = async data => {
-    return User.create(data)
+    return UserModel.create(data)
 }
 
 exports.getUserById = async (id, res) => {
