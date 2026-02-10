@@ -1,23 +1,33 @@
 const { Sequelize, DataTypes } = require('sequelize');
 const {sequelize} = require('../../../config/DbConnection');
+const {User} = require('../../user/model/UserModel')
 
-const User = sequelize.define(
+const Meeting = sequelize.define(
   'Meeting',
   {
-    // Model attributes are defined here
-    firstName: {
-      type: DataTypes.STRING,
-      allowNull: false,
+    id: {
+        type: DataTypes.UUID,
+        primaryKey: true
     },
-    lastName: {
-      type: DataTypes.STRING,
-      // allowNull defaults to true
+    title: {
+        type: DataTypes.STRING,
+        allowNull: false
     },
-  },
-  {
-    // Other model options go here
-  },
+    startTime: {
+        type: DataTypes.DATE,
+        allowNull: false,
+    },
+    endTime: {
+        type: DataTypes.DATE,
+        allowNull: false,
+    }
+  }
 );
 
 // `sequelize.define` also returns the model
-console.log(User === sequelize.models.User); // true
+// console.log(User === sequelize.models.User); // true
+
+User.hasMany(Meeting, {foreignKey: "userId"})
+Meeting.belongsTo(User, {foreignKey: "userId"})
+
+module.exports = Meeting
